@@ -8,8 +8,10 @@
     <% include ../views/partials/_header %>
   </header>
     <% for(const url in urls) { %>
-      <button><form method="POST" action="/urls/9sm5xK/delete">delete
-     </form></button>
+      <form method="POST" action="/urls/<%= url %>/delete"><button>delete</button>
+     </form>
+       <form method="GET" action="/urls/<%= url %>"><button>edit</button>
+     </form>
      <li><%= url + ': ' + urls[url]  %></li>
       <% } %>
      <a href="">short url</a>

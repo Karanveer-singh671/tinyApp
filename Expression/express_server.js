@@ -32,16 +32,22 @@ res.redirect("/urls");
 });
 
 app.post("/urls/:id", (req,res) => {
-  let id = req.params.id;
-   urlDatabase[id] = req.body.longURL;
-  res.redirect(urlDatabase[id]);
+  let shortURL = req.params.id;
+  let longURL = req.body["longURL"]
+  urlDatabase[shortURL] = longURL;
+   // don't modify from inside object can change from outside
+ // console.log(urlDatabase);
+  res.redirect("/urls" );
 })
 
 app.post("/urls", (req, res) => {
   console.log(generateRandomString(), req.body.longURL);  // debug statement to see POST parameters
+  let shortURL = generateRandomString();
+  let longURL = req.body["longURL"]
+  urlDatabase[shortURL] = longURL;
    // don't modify from inside object can change from outside
  // console.log(urlDatabase);
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  res.redirect("/urls" );         // Respond with 'Ok' (we will replace this)
 });
 
 app.get("/urls", (req, res) => {
@@ -50,6 +56,7 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => { // if you put new below id it thinks new is the id
+  let id = req.params.id;
   res.render("urls_new");
 });
 
@@ -57,7 +64,7 @@ app.get("/urls/:id", (req, res) => {  // not a response it's used to get the res
   let templateVars = { shortURL: req.params.id,
                         urlDatabase: urlDatabase };
        let id = req.params.id;  // accesses short url
-    //   res.redirect(urlDatabase[id]); // responds with a redirection with the value associated with id which is URL
+       //res.redirect(urlDatabase[id]); // responds with a redirection with the value associated with id which is URL
   res.render("urls_show", templateVars);
 });
 
